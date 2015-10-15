@@ -17,10 +17,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author Alexandr
- */
+
+
 @Entity
 @Table(name = "access_types")
 @NamedQueries({
