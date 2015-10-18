@@ -21,9 +21,17 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
 /**
+ * Project <b> elib</b>. 
  *
- * @author Alexandr
+ * This Entity Class describes Types of Files
+ *
+ * @version $version$
+ * @author Oleksandr Lukichov
+ *
+ * @since 18 זמגע. 2015 נ.
+ *
  */
 @Entity
 @Table(name = "file_types")

@@ -17,9 +17,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+
 /**
+ * Project <b> elib</b>. 
  *
- * @author Alexandr
+ * This Entity Class describes Backgrounds of Books
+ *
+ * @version $version$
+ * @author Oleksandr Lukichov
+ *
+ * @since 18 זמגע. 2015 נ.
+ *
  */
 @Entity
 @Table(name = "BACKGROUNDS")
@@ -27,8 +35,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Background.findAll", query = "SELECT b FROM Background b"),
     @NamedQuery(name = "Background.findByBackgroundId", query = "SELECT b FROM Background b WHERE b.backgroundId = :backgroundId"),
     @NamedQuery(name = "Background.findByBackgroundName", query = "SELECT b FROM Background b WHERE b.backgroundName = :backgroundName"),
-    @NamedQuery(name = "Background.findByBackgroundColor", query = "SELECT b FROM Background b WHERE b.backgroundColor = :backgroundColor"),
-    @NamedQuery(name = "Background.findByBackgroundAddress", query = "SELECT b FROM Background b WHERE b.backgroundAddress = :backgroundAddress")})
+    @NamedQuery(name = "Background.findByBackgroundColor", query = "SELECT b FROM Background b WHERE b.backgroundColor = :backgroundColor")})
 public class Background implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,11 +43,14 @@ public class Background implements Serializable {
     @Basic(optional = false)
     @Column(name = "background_id")
     private Integer backgroundId;
+    
     @Size(max = 20)
     @Column(name = "background_name")
     private String backgroundName;
+    
     @Column(name = "background_color")
     private Integer backgroundColor;
+    
     @Size(max = 30)
     @Column(name = "background_address")
     private String backgroundAddress;

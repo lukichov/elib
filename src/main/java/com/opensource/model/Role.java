@@ -20,9 +20,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
 /**
+ * Project <b> elib</b>. 
  *
- * @author Alexandr
+ * This Entity Class describes Roles of Users
+ *
+ * @version $version$
+ * @author Oleksandr Lukichov
+ *
+ * @since 18 זמגע. 2015 נ.
+ *
  */
 @Entity
 @Table(name = "roles")
@@ -30,8 +38,7 @@ import javax.validation.constraints.Size;
 @NamedQueries({
 		@NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
 		@NamedQuery(name = "Role.findByRoleId", query = "SELECT r FROM Role r WHERE r.roleId = :roleId"),
-		@NamedQuery(name = "Role.findByRoleName", query = "SELECT r FROM Role r WHERE r.roleName = :roleName"),
-		@NamedQuery(name = "Role.findByRoleDescriptions", query = "SELECT r FROM Role r WHERE r.roleDescriptions = :roleDescriptions") })
+		@NamedQuery(name = "Role.findByRoleName", query = "SELECT r FROM Role r WHERE r.roleName = :roleName")})
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 

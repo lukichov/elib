@@ -18,17 +18,24 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
 /**
+ * Project <b> elib</b>. 
  *
- * @author Alexandr
+ * This Entity Class describes Categories of Books
+ *
+ * @version $version$
+ * @author Oleksandr Lukichov
+ *
+ * @since 18 זמגע. 2015 נ.
+ *
  */
 @Entity
 @Table(name = "categories", catalog = "elibrary", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c"),
     @NamedQuery(name = "Category.findByCategoryId", query = "SELECT c FROM Category c WHERE c.categoryId = :categoryId"),
-    @NamedQuery(name = "Category.findByCategoryName", query = "SELECT c FROM Category c WHERE c.categoryName = :categoryName"),
-    @NamedQuery(name = "Category.findByCategoryDescription", query = "SELECT c FROM Category c WHERE c.categoryDescription = :categoryDescription")})
+    @NamedQuery(name = "Category.findByCategoryName", query = "SELECT c FROM Category c WHERE c.categoryName = :categoryName")})
 public class Category implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -36,11 +43,13 @@ public class Category implements Serializable {
     @Basic(optional = false)
     @Column(name = "category_id")
     private Integer categoryId;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "category_name")
     private String categoryName;
+    
     @Size(max = 50)
     @Column(name = "category_description")
     private String categoryDescription;
