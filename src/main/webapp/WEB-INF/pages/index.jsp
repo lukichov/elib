@@ -3,7 +3,7 @@
 
 <spring:url value="/personalPage/" var="personalPage"/>
 <spring:url value="/market/" var="marketUrl"/>
-<spring:url value="/logout/" var="logOutUrl"/>
+<spring:url value="/footer" var="footerUrl"/>
 
 <html>
 <body>
@@ -13,6 +13,8 @@
 <a href="${personalPage}">Personal Page</a>
 <br/>
 <a href="${marketUrl}">Market</a>
+<br/>
+<a href="${footerUrl}">footer page</a>
 <br/>
 
 <sec:authorize access="isAuthenticated()">

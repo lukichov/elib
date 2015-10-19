@@ -18,6 +18,7 @@
 		<intercept-url pattern="/personalPage/**" access="isAuthenticated()" />
 
 		<access-denied-handler error-page="/accessDenied/" />
+		<form-login login-page="/login" authentication-failure-url="/login.html?error=true" default-target-url="/index" />
 		<logout logout-url="/logout/" logout-success-url="/logoutSuccess/" />
 	</http>
 

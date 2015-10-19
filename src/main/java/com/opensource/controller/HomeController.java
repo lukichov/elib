@@ -21,4 +21,10 @@ public class HomeController {
         model.addAttribute("welcomeMessage", name);
         return "index";
     }
+    
+    
+    @RequestMapping(value = "footer", method = RequestMethod.GET)
+    public String footerTest(ModelMap model) {
+       return "footer";
+    }
 }
