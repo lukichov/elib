@@ -29,7 +29,7 @@ import javax.validation.constraints.Size;
  * @version $version$
  * @author Oleksandr Lukichov
  *
- * @since 18 זמגע. 2015 נ.
+ * @since October 18, 2015
  *
  */
 @Entity
