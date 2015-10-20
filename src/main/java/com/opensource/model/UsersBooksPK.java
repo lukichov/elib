@@ -9,24 +9,16 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-
 /**
- * Project <b> elib</b>. 
  *
- * This Embeddable describes a composite primary key for UsersBooks class
- *
- * @version $version$
- * @author Oleksandr Lukichov
- *
- * @since October 18, 2015
- *
+ * @author Alexandr
  */
 @Embeddable
 public class UsersBooksPK implements Serializable{
 
     @Column(name = "user_id")
-    private Integer userId;
+    private int userId;
 
     @Column(name = "book_id")
-    private Integer bookId;
+    private Long bookId;
 }

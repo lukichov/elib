@@ -33,152 +33,154 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Project <b> elib</b>.
  *
- * This Entity Class describes Books
- *
- * @version $version$
- * @author Oleksandr Lukichov
- *
- * @since October 18, 2015
- *
+ * @author Alexandr
  */
 @Entity
 @Table(name = "books", catalog = "elibrary", schema = "")
-@NamedQueries({ @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
-		@NamedQuery(name = "Book.findByBookId", query = "SELECT b FROM Book b WHERE b.bookId = :bookId"),
-		@NamedQuery(name = "Book.findByBookName", query = "SELECT b FROM Book b WHERE b.bookName = :bookName"),
-		@NamedQuery(name = "Book.findByBookAddedDate", query = "SELECT b FROM Book b WHERE b.bookAddedDate = :bookAddedDate"),
-		@NamedQuery(name = "Book.findByAccessType", query = "SELECT b FROM Book b WHERE b.accessType = :accessType") })
+@NamedQueries({
+    @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
+    @NamedQuery(name = "Book.findByBookId", query = "SELECT b FROM Book b WHERE b.bookId = :bookId"),
+    @NamedQuery(name = "Book.findByBookName", query = "SELECT b FROM Book b WHERE b.bookName = :bookName"),
+    @NamedQuery(name = "Book.findByBookAddedDate", query = "SELECT b FROM Book b WHERE b.bookAddedDate = :bookAddedDate"),
+    @NamedQuery(name = "Book.findByAccessTypeId", query = "SELECT b FROM Book b WHERE b.accessType = :accessType")})
 public class Book implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "book_id")
+    private Integer bookId;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 60)
+    @Column(name = "book_name")
+    private String bookName;
+    
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "book_descriptions")
+    private String bookDescriptions;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "book_added_date")
+    @Temporal(TemporalType.DATE)
+    private Date bookAddedDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "access_type_id")
+    private AccessType accessType;
+    
+    @ManyToMany
+    @JoinTable(
+            name = "BOOKS_CATEGORIES",
+            joinColumns = {
+                @JoinColumn(name = "book_id", referencedColumnName = "book_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "category_id", referencedColumnName = "category_id")})
+    private Set<Category> categories;
+    @ManyToMany
+    @JoinTable(
+            name = "BOOKS_AUTHORS",
+            joinColumns = {
+                @JoinColumn(name = "book_id", referencedColumnName = "book_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "author_id", referencedColumnName = "author_id")})
+    private Set<Author> authors;
+    @ManyToMany
+    @JoinTable(
+            name = "BOOKS_FILES",
+            joinColumns = {
+                @JoinColumn(name = "book_id", referencedColumnName = "book_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "file_id", referencedColumnName = "file_id")})
+    private Set<File> files;
+//    @ManyToMany(mappedBy = "books")
+//    private Set<User> users;
+    
+    @OneToMany(mappedBy = "user")
+        private Set<UsersBooks> usersBooks = new HashSet<UsersBooks>();
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@Column(name = "book_id")
-	private Integer bookId;
+    public Book() {
+    }
 
-	@Basic(optional = false)
-	@NotNull
-	@Size(min = 1, max = 60)
-	@Column(name = "book_name")
-	private String bookName;
+    public Book(Integer bookId) {
+        this.bookId = bookId;
+    }
 
-	@Lob
-	@Size(max = 65535)
-	@Column(name = "book_descriptions")
-	private String bookDescriptions;
+    public Book(Integer bookId, String bookName, Date bookAddedDate) {
+        this.bookId = bookId;
+        this.bookName = bookName;
+        this.bookAddedDate = bookAddedDate;
+    }
 
-	@Basic(optional = false)
-	@NotNull
-	@Column(name = "book_added_date")
-	@Temporal(TemporalType.DATE)
-	private Date bookAddedDate;
+    public Integer getBookId() {
+        return bookId;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "access_type_id")
-	private AccessType accessType;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
+    }
 
-	@ManyToMany
-	@JoinTable(name = "BOOKS_CATEGORIES", joinColumns = {
-			@JoinColumn(name = "book_id", referencedColumnName = "book_id") }, inverseJoinColumns = {
-					@JoinColumn(name = "category_id", referencedColumnName = "category_id") })
-	private Set<Category> categories;
-	@ManyToMany
-	@JoinTable(name = "BOOKS_AUTHORS", joinColumns = {
-			@JoinColumn(name = "book_id", referencedColumnName = "book_id") }, inverseJoinColumns = {
-					@JoinColumn(name = "author_id", referencedColumnName = "author_id") })
-	private Set<Author> authors;
-	@ManyToMany
-	@JoinTable(name = "BOOKS_FILES", joinColumns = {
-			@JoinColumn(name = "book_id", referencedColumnName = "book_id") }, inverseJoinColumns = {
-					@JoinColumn(name = "file_id", referencedColumnName = "file_id") })
-	private Set<File> files;
+    public String getBookName() {
+        return bookName;
+    }
 
-	@OneToMany(mappedBy = "user")
-	private Set<UsersBooks> usersBooks = new HashSet<UsersBooks>();
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 
-	public Book() {
-	}
+    public String getBookDescriptions() {
+        return bookDescriptions;
+    }
 
-	public Book(Integer bookId) {
-		this.bookId = bookId;
-	}
+    public void setBookDescriptions(String bookDescriptions) {
+        this.bookDescriptions = bookDescriptions;
+    }
 
-	public Book(Integer bookId, String bookName, Date bookAddedDate) {
-		this.bookId = bookId;
-		this.bookName = bookName;
-		this.bookAddedDate = bookAddedDate;
-	}
+    public Date getBookAddedDate() {
+        return bookAddedDate;
+    }
 
-	public Integer getBookId() {
-		return bookId;
-	}
+    public void setBookAddedDate(Date bookAddedDate) {
+        this.bookAddedDate = bookAddedDate;
+    }
 
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
-	}
+    public AccessType getAccessType() {
+        return accessType;
+    }
 
-	public String getBookName() {
-		return bookName;
-	}
+    public void setAccessType(AccessType accessType) {
+        this.accessType = accessType;
+    }
 
-	public void setBookName(String bookName) {
-		this.bookName = bookName;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (bookId != null ? bookId.hashCode() : 0);
+        return hash;
+    }
 
-	public String getBookDescriptions() {
-		return bookDescriptions;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Book)) {
+            return false;
+        }
+        Book other = (Book) object;
+        if ((this.bookId == null && other.bookId != null) || (this.bookId != null && !this.bookId.equals(other.bookId))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setBookDescriptions(String bookDescriptions) {
-		this.bookDescriptions = bookDescriptions;
-	}
-
-	public Date getBookAddedDate() {
-		return bookAddedDate;
-	}
-
-	public void setBookAddedDate(Date bookAddedDate) {
-		this.bookAddedDate = bookAddedDate;
-	}
-
-	public AccessType getAccessType() {
-		return accessType;
-	}
-
-	public void setAccessType(AccessType accessType) {
-		this.accessType = accessType;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (bookId != null ? bookId.hashCode() : 0);
-		return hash;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
-		// not set
-		if (!(object instanceof Book)) {
-			return false;
-		}
-		Book other = (Book) object;
-		if ((this.bookId == null && other.bookId != null)
-				|| (this.bookId != null && !this.bookId.equals(other.bookId))) {
-			return false;
-		}
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Book{" + "bookId=" + bookId + ", bookName=" + bookName + ", bookDescriptions=" + bookDescriptions
-				+ ", bookAddedDate=" + bookAddedDate + ", accessType=" + accessType.getAccessTypeName() + '}';
-	}
+    @Override
+    public String toString() {
+        return "Book{" + "bookId=" + bookId + ", bookName=" + bookName + ", bookDescriptions=" + bookDescriptions + ", bookAddedDate=" + bookAddedDate + ", accessType=" + accessType.getAccessTypeName() + '}';
+    }
 
 }

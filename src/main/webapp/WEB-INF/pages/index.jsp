@@ -12,8 +12,8 @@
 <br/>
 <a href="${personalPage}">Personal Page</a>
 <br/>
-<a href="${marketUrl}">Market</a>
-<br/>
+<!--<a href="${marketUrl}">Market</a>
+<br/> -->
 
 <sec:authorize access="isAuthenticated()">
     <br/>
