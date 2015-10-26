@@ -31,16 +31,9 @@ public class LoginController {
  
     
     @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String redirectToLogin(ModelMap model, Principal principal) {
+    public String redirectToLogin() {
         
         return "login";
     }
-
-    private String getUserName(Principal principal) {
-        if (principal != null) {
-            return principal.getName();
-        } else {
-            return "User";
-        }
-    }
+    
 }

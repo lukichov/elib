@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Sing in</title>
+        <title>Sign in</title>
         
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/login.css"/>
    
@@ -12,7 +12,6 @@
     <body onload='document.loginForm.username.focus();'>
         <div class="wrapper">
 	<div class="container">
-        <hr/>
         
         <%
  
@@ -23,17 +22,14 @@ out.println("Incorrect login name or password. Please retry using correct login 
 %>
         
         <form name="f" action="<c:url value='login' />" method="POST" >
-            Login           
+            Login:          
             <input type="text" name="username">
             Password:
             <input type="password" name ="password">
-           
             <input name="submit" type ="submit" value="Login">
-            <input type ="submit" formaction="#" value="Registration">
-         <!--<input name="_csrf" type="hidden" value="1a17ff6c-e1a4-4d2c-b755-ce0a16fc2dcb" /> -->
+            <input type ="submit" formaction="registration" value="Registration"> 
          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
-        <hr/>
         </div>
 	<ul class="bg-bubbles">
 		<li></li>
