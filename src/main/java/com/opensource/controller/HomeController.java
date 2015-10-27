@@ -1,10 +1,17 @@
 package com.opensource.controller;
 
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Project <b> elib</b>. 
@@ -14,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @version $version$
  * @author Oleksandr Lukichov
  *
- * @since 15 жовт. 2015 р.
+ * @since 15 пїЅпїЅпїЅпїЅ. 2015 пїЅ.
  *
  */
 @Controller
@@ -33,7 +40,7 @@ public class HomeController {
      *
      * @see com.opensource.controller.HomeController
      * @author <i>Oleksandr Lukichov</i>
-     * @since 15 жовт. 2015 р.
+     * @since 15 пїЅпїЅпїЅпїЅ. 2015 пїЅ.
      *
      *
      * @param name
@@ -53,4 +60,13 @@ public class HomeController {
     public String footerTest(ModelMap model) {
        return "footer";
     }
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView showLoginPage(HttpServletRequest request, HttpServletResponse response, Locale locale) {
+	
+		ModelAndView view = new ModelAndView("login");
+	
+		return view;
+}
+    
 }

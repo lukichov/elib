@@ -1,6 +1,7 @@
 package com.opensource.controller;
 
 import com.opensource.Constants;
+import com.opensource.model.User;
 import com.opensource.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +15,34 @@ import java.security.Principal;
 @Controller
 public class UsersPersonalPageController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @RequestMapping(value = "personalPage", method = RequestMethod.GET)
-    public String redirectToPersonalPage(ModelMap model, Principal principal) {
-        if (principal != null && userService.hasRole(principal.getName(), Constants.ADMIN_ROLE)) {
-            return "redirect:/admin/";
-        }
-        fillGreetingMessageForPersonalPage(model, principal);
-        return "personalPage";
-    }
+	@RequestMapping(value = "personalPage", method = RequestMethod.GET)
+	public String redirectToPersonalPage(ModelMap model, Principal principal) {
+		if (principal != null && userService.hasRole(principal.getName(), Constants.ADMIN_ROLE)) {
+			return "redirect:/admin/";
+		}
+		if (principal != null) {
+			String greetingMessage = "Hello " + getUserName(principal) + ". What's up?";
 
-    public void fillGreetingMessageForPersonalPage(ModelMap model, Principal principal) {
-        String greetingMessage = "Hello "+getUserName(principal)+". What's up?";
-        model.addAttribute("greetingMessage", greetingMessage);
-    }
+			model.addAttribute("greetingMessage", greetingMessage);
 
-    private String getUserName(Principal principal) {
-        if (principal != null) {
-            return principal.getName();
-        } else {
-            return "User";
-        }
-    }
+			User curentUser = userService.getUser(principal.getName());
+
+			model.addAttribute("user", curentUser);
+
+		} else
+			return "redirect: /login/";
+
+		return "personalPage";
+	}
+
+	private String getUserName(Principal principal) {
+		if (principal != null) {
+			return principal.getName();
+		} else {
+			return "User";
+		}
+	}
 }

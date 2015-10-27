@@ -4,7 +4,7 @@
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
 
-	<definition name="default" template="/resources/template/mainTemplate.jsp">
+	<definition name="default" template="/resources/template/main.jsp">
 		<put-attribute name="title" value="" />
 		<put-attribute name="menu" value="" />
 		<put-attribute name="body" value="" />
@@ -12,36 +12,42 @@
 		<put-attribute name="filterPanel" value="" />
 		<put-attribute name="chatPanel" value="" />
 
-		<put-attribute name="footer" value="/resources/views/jsp/footer/footer.jsp" />
+		<put-attribute name="footer" value="/resources/views/footer.jsp" />
 		<put-list-attribute name="cssList" cascade="true">
-			<add-attribute value="/resources/z-template-res/plugins/bootstrap/bootstrap.min.css" />
-			<add-attribute value="/resources/z-template-res/plugins/jquery-ui/jquery-ui.min.css" />
-			<add-attribute value="/resources/z-template-res/plugins/fancybox/jquery.fancybox.css" />
-			<add-attribute value="/resources/z-template-res/css/style.css" />
-			<!-- <add-attribute value="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" /> -->
-			<add-attribute value="https://fonts.googleapis.com/css?family=Righteous" />
-			<add-attribute value="/resources/css/language/languages.min.css" />
-			<add-attribute value="/resources/css/font-awesome.css" />
+			<add-attribute value="/resources/css/bootstrap.min.css" />
+			<add-attribute value="/resources/css/jquery-ui.min.css" />
 		</put-list-attribute>
 
 		<put-list-attribute name="jsList" cascade="true">
 			<add-attribute value="/resources/js/jquery.min.js" />
 			<add-attribute value="/resources/js/jquery-ui.js" />
 
-			<add-attribute value="/resources/z-template-res/plugins/bootstrap/bootstrap.min.js" />
-			<add-attribute value="/resources/z-template-res/plugins/jquery-ui/jquery-ui.min.js" />
-			<add-attribute value="/resources/z-template-res/plugins/fancybox/jquery.fancybox.js" />
-			<add-attribute value="/resources/z-template-res/plugins/tinymce/tinymce.min.js" />
-			<add-attribute value="/resources/z-template-res/plugins/tinymce/jquery.tinymce.min.js" />
-			<add-attribute value="/resources/z-template-res/js/devoops.js" />
-
 		</put-list-attribute>
 
 	</definition>
 
-	<definition name="personalPage" template="/resources/views/personalPage.jsp">
+	<definition name="personalPage" extends="default">
 		<put-attribute name="title" value="Personal page" />
 		<put-attribute name="current" value="personalpage" />
+		<put-attribute name="body" value="/resources/views/personalPage.jsp" />
+
+		<put-list-attribute name="jsList" cascade="true">
+			<add-attribute value="/resources/js/jquery.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+			<add-attribute value="/resources/js/bootstrap.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="cssList" cascade="true">
+			<add-attribute value="/resources/css/bootstrap.min.css" />
+			<add-attribute value="/resources/css/jquery-ui.min.css" />
+			<add-attribute value="/resources/css/bootstrap-combined.min.css" />
+		</put-list-attribute>
+	</definition>
+
+
+	<definition name="login" template="/resources/views/security/login.jsp">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="current" value="login" />
 
 		<put-list-attribute name="jsList" cascade="true">
 			<add-attribute value="/resources/js/jquery.min.js" />
@@ -49,9 +55,10 @@
 		</put-list-attribute>
 
 		<put-list-attribute name="cssList" cascade="true">
-			<add-attribute value="/resources/css/login/style.css" />
+			<add-attribute value="/resources/css/style.css" />
 		</put-list-attribute>
 	</definition>
+
 
 
 	<definition name="admin" template="/resources/views/admin.jsp">
@@ -64,7 +71,7 @@
 		</put-list-attribute>
 
 		<put-list-attribute name="cssList" cascade="true">
-			<add-attribute value="/resources/css/login/style.css" />
+			<add-attribute value="/resources/css/style.css" />
 		</put-list-attribute>
 	</definition>
 
@@ -78,11 +85,37 @@
 		</put-list-attribute>
 
 		<put-list-attribute name="cssList" cascade="true">
-			<add-attribute value="/resources/css/login/style.css" />
+			<add-attribute value="/resources/css/style.css" />
 		</put-list-attribute>
 	</definition>
 
+	<definition name="logoutSuccess" template="/resources/views/security/logoutSuccess.jsp">
+		<put-attribute name="title" value="Personal page" />
+		<put-attribute name="current" value="personalpage" />
 
+		<put-list-attribute name="jsList" cascade="true">
+			<add-attribute value="/resources/js/jquery.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="cssList" cascade="true">
+			<add-attribute value="/resources/css/style.css" />
+		</put-list-attribute>
+	</definition>
+
+	<definition name="accessDenied.jsp" template="/resources/views/security/accessDenied.jsp.jsp">
+		<put-attribute name="title" value="Personal page" />
+		<put-attribute name="current" value="personalpage" />
+
+		<put-list-attribute name="jsList" cascade="true">
+			<add-attribute value="/resources/js/jquery.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="cssList" cascade="true">
+			<add-attribute value="/resources/css/style.css" />
+		</put-list-attribute>
+	</definition>
 
 	<definition name="order-detail" extends="default">
 		<put-attribute name="header" value="" />
@@ -90,5 +123,5 @@
 		<put-attribute name="body" value="/resources/views/order-detail.jsp" />
 	</definition>
 
-	
+
 </tiles-definitions>
