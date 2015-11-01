@@ -18,6 +18,21 @@ public class UsersPersonalPageController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * Controller for getting personal page and editing of it. 
+	 * Corrected by *user* on *date* *correction description
+	 *
+	 * @see com.opensource.controller.UsersPersonalPageController
+	 * @author <i>Denys Shevotsukov</i>
+	 * @since Nov 1, 2015
+	 *
+	 *
+	 * @param model
+	 * @param principal
+	 * @return 
+	 * String
+	 * 
+	 */
 	@RequestMapping(value = "personalPage", method = RequestMethod.GET)
 	public String redirectToPersonalPage(ModelMap model, Principal principal) {
 		if (principal != null && userService.hasRole(principal.getName(), Constants.ADMIN_ROLE)) {
