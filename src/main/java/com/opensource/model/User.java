@@ -26,135 +26,71 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * Project <b> elib</b>.
  *
- * This Entity Class describes Users
- *
- * @version $version$
- * @author Oleksandr Lukichov
- *
- * @since October 18, 2015
- *
+ * @author Alexandr
  */
 @Entity
 @Table(name = "users")
-@NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
-		@NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
-		@NamedQuery(name = "User.findByUserPassword", query = "SELECT u FROM User u WHERE u.userPassword = :userPassword"),
-		@NamedQuery(name = "User.findByUserLogin", query = "SELECT u FROM User u WHERE u.userLogin = :userLogin"),
-		@NamedQuery(name = "User.findByUserLoginAndPassword", query = "SELECT u FROM User u WHERE u.userLogin = :userLogin and u.userPassword = :userPassword"),
-		@NamedQuery(name = "User.findByUserEmail", query = "SELECT u FROM User u WHERE u.userEmail = :userEmail"),
-		@NamedQuery(name = "User.findByBlocked", query = "SELECT u FROM User u WHERE u.blocked = :blocked") })
+@NamedQueries({
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId"),
+    @NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
+    @NamedQuery(name = "User.findByUserPassword", query = "SELECT u FROM User u WHERE u.userPassword = :userPassword"),
+    @NamedQuery(name = "User.findByUserLogin", query = "SELECT u FROM User u WHERE u.userLogin = :userLogin"),
+    @NamedQuery(name = "User.findByUserEmail", query = "SELECT u FROM User u WHERE u.userEmail = :userEmail"),
+    @NamedQuery(name = "User.findByBlocked", query = "SELECT u FROM User u WHERE u.blocked = :blocked")})
 public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "user_id")
+    private Integer userId;
+    
+    @Size(max = 50)
+    @NotNull
+    @Column(name = "user_name")
+    private String userName;
+    
+    @Size(max = 50)
+    @Column(name = "user_password")
+    private String userPassword;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "user_login")
+    private String userLogin;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "user_email")
+    private String userEmail;
+    
+    @Column(name = "blocked")
+    private Boolean blocked;
+    
+    @ManyToMany
+    @JoinTable(
+            name = "USERS_ROLES",
+            joinColumns = {
+                @JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "role_id", referencedColumnName = "role_id")})
+    private Set<Role> roles;
+    
+//    @ManyToMany
+//    @JoinTable(
+//            name = "USERS_BOOKS",
+//            joinColumns = {
+//                @JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+//            inverseJoinColumns = {
+//                @JoinColumn(name = "book_id", referencedColumnName = "book_id")})
+//    private Set<Book> books;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Basic(optional = false)
-	@Column(name = "user_id")
-	private Integer userId;
-
-	@Size(max = 50)
-	@NotNull
-	@Column(name = "user_name")
-	private String userName;
-
-	@Size(max = 50)
-	@Column(name = "user_password")
-	private String userPassword;
-
-	@Basic(optional = false)
-	@NotNull
-	@Column(name = "user_login")
-	private String userLogin;
-
-	@Basic(optional = false)
-	@NotNull
-	@Size(min = 1, max = 50)
-	@Column(name = "user_email")
-	private String userEmail;
-
-	@Column(name = "blocked")
-	private Boolean blocked;
-
-	@ManyToMany
-	@JoinTable(name = "USERS_ROLES", joinColumns = {
-			@JoinColumn(name = "user_id", referencedColumnName = "user_id") }, inverseJoinColumns = {
-					@JoinColumn(name = "role_id", referencedColumnName = "role_id") })
-	private Set<Role> roles;
-
-	@OneToMany(mappedBy = "book")
-	private Set<UsersBooks> usersBooks = new HashSet<UsersBooks>();
-
-	public User() {
-	}
-
-	public User(Integer userId) {
-		this.userId = userId;
-	}
-
-	public User(Integer userId, String userLogin, String userEmail) {
-		this.userId = userId;
-		this.userLogin = userLogin;
-		this.userEmail = userEmail;
-	}
-
-	public User(String name, String password, Set<Role> roles) {
-		this.setUserName(name);
-		this.setUserPassword(password);
-		this.setRoles(roles);
-	}
-
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
-	public String getUserLogin() {
-		return userLogin;
-	}
-
-	public void setUserLogin(String userLogin) {
-		this.userLogin = userLogin;
-	}
-
-	public String getUserEmail() {
-		return userEmail;
-	}
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
-	}
-
-	public Boolean getBlocked() {
-		return blocked;
-	}
-
-	public void setBlocked(Boolean blocked) {
-		this.blocked = blocked;
-	}
-
-	public Set<Role> getRoles() {
+    
+    public Set<Role> getRoles() {
 		return roles;
 	}
 
@@ -170,31 +106,100 @@ public class User implements Serializable {
 		this.usersBooks = usersBooks;
 	}
 
-	@Override
-	public int hashCode() {
-		int hash = 0;
-		hash += (userId != null ? userId.hashCode() : 0);
-		return hash;
+	@OneToMany(mappedBy = "book")
+    private Set<UsersBooks> usersBooks = new HashSet<UsersBooks>();
+    
+    
+    public User() {
+    }
+
+    public User(Integer userId) {
+        this.userId = userId;
+    }
+
+    public User(Integer userId, String userLogin, String userEmail) {
+        this.userId = userId;
+        this.userLogin = userLogin;
+        this.userEmail = userEmail;
+    }
+
+    public User(String name, String password, Set<Role> roles) {
+		this.setUserName(name);
+		this.setUserPassword(password);
+		this.setRoles(roles);
 	}
 
-	@Override
-	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
-		// not set
-		if (!(object instanceof User)) {
-			return false;
-		}
-		User other = (User) object;
-		if ((this.userId == null && other.userId != null)
-				|| (this.userId != null && !this.userId.equals(other.userId))) {
-			return false;
-		}
-		return true;
-	}
+	public Integer getUserId() {
+        return userId;
+    }
 
-	@Override
-	public String toString() {
-		return "com.mycompany.elib.entity.User[ userId=" + userId + " ]";
-	}
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public Boolean getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(Boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (userId != null ? userId.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof User)) {
+            return false;
+        }
+        User other = (User) object;
+        if ((this.userId == null && other.userId != null) || (this.userId != null && !this.userId.equals(other.userId))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.mycompany.elib.entity.User[ userId=" + userId + " ]";
+    }
+    
 }

@@ -22,19 +22,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
- * Project <b> elib</b>. 
  *
- * This Entity Class describes ManyToMany relations between User and Book classes 
- * and contain properties of books for user  
- *  
- *
- * @version $version$
- * @author Oleksandr Lukichov
- *
- * @since October 18, 2015
- *
+ * @author Alexandr
  */
 @Entity
 @Table(name = "USERS_BOOKS")
@@ -43,7 +33,7 @@ public class UsersBooks implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private UsersBooksPK id; //composite primary key 
+    private UsersBooksPK id;
 
     @ManyToOne
     @MapsId("userId") //This is the name of attr in UsersBooksPK class
@@ -67,7 +57,7 @@ public class UsersBooks implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "background_id")
-    private Background background;
+    private Book backgroundId;
     
     @Column(name = "current_book")
     private boolean currentBook;
@@ -75,12 +65,21 @@ public class UsersBooks implements Serializable {
     @Column(name = "current_position")
     private long currentPosition;
     
-    
-    public UsersBooks() {
-		super();
-	}
+//User user = new User();
+//Service service = new Service();
+//UserService userService = new UserService();
+//
+//user.addUserService(userService);
+//userService.setUser(user);
+//
+//service.addUserService(userService);
+//userService.setService(service);
+//
+//session.save(user);
+//session.save(service);
+//session.save(userService);
 
-	public UsersBooksPK getId() {
+    public UsersBooksPK getId() {
         return id;
     }
 
@@ -128,12 +127,12 @@ public class UsersBooks implements Serializable {
         this.fontSize = fontSize;
     }
 
-    public Background getBackground() {
-        return background;
+    public Book getBackgroundId() {
+        return backgroundId;
     }
 
-    public void setBackground(Background background) {
-        this.background = background;
+    public void setBackgroundId(Book backgroundId) {
+        this.backgroundId = backgroundId;
     }
 
     public boolean isCurrentBook() {
@@ -161,7 +160,7 @@ public class UsersBooks implements Serializable {
         hash = 59 * hash + Objects.hashCode(this.dateAdded);
         hash = 59 * hash + this.fontId;
         hash = 59 * hash + this.fontSize;
-        hash = 59 * hash + Objects.hashCode(this.background);
+        hash = 59 * hash + Objects.hashCode(this.backgroundId);
         hash = 59 * hash + (this.currentBook ? 1 : 0);
         hash = 59 * hash + (int) (this.currentPosition ^ (this.currentPosition >>> 32));
         return hash;
@@ -194,7 +193,7 @@ public class UsersBooks implements Serializable {
         if (this.fontSize != other.fontSize) {
             return false;
         }
-        if (!Objects.equals(this.background, other.background)) {
+        if (!Objects.equals(this.backgroundId, other.backgroundId)) {
             return false;
         }
         if (this.currentBook != other.currentBook) {
@@ -208,9 +207,7 @@ public class UsersBooks implements Serializable {
 
     @Override
     public String toString() {
-        return "UsersBooks{" + "id=" + id + ", user=" + user + ", book=" + book + ", dateAdded=" + dateAdded 
-        		+ ", fontId=" + fontId + ", fontSize=" + fontSize + ", background=" + background.getBackgroundName() 
-        		+ ", currentBook=" + currentBook + ", currentPosition=" + currentPosition + '}';
+        return "UsersBooks{" + "id=" + id + ", user=" + user + ", book=" + book + ", dateAdded=" + dateAdded + ", fontId=" + fontId + ", fontSize=" + fontSize + ", backgroundId=" + backgroundId + ", currentBook=" + currentBook + ", currentPosition=" + currentPosition + '}';
     }
     
     

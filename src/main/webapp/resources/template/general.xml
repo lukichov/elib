@@ -45,6 +45,8 @@
 	</definition>
 
 
+
+
 	<definition name="login" template="/resources/views/security/login.jsp">
 		<put-attribute name="title" value="Login" />
 		<put-attribute name="current" value="login" />
@@ -59,7 +61,19 @@
 		</put-list-attribute>
 	</definition>
 
+<definition name="registration" template="/resources/views/security/registration.jsp">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="current" value="login" />
 
+		<put-list-attribute name="jsList" cascade="true">
+			<add-attribute value="/resources/js/jquery.min.js" />
+			<add-attribute value="/resources/js/jquery-ui.js" />
+		</put-list-attribute>
+
+		<put-list-attribute name="cssList" cascade="true">
+			<add-attribute value="/resources/css/style.css" />
+		</put-list-attribute>
+	</definition>
 
 	<definition name="admin" template="/resources/views/admin.jsp">
 		<put-attribute name="title" value="Personal page" />
